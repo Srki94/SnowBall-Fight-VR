@@ -29,9 +29,9 @@ public class CharacterControllerVR : MonoBehaviour
 
     void ThrowSnowball()
     {
-        GameObject snowBall = Instantiate(snowBallPrefab, snowBallSpawnPoint.position, transform.rotation) as GameObject;
-        snowBall.AddComponent<Rigidbody>();
-        snowBall.GetComponent<Rigidbody>().AddForce(Vector3.forward * 150f);
+        GameObject snowBall = Instantiate(snowBallPrefab, snowBallSpawnPoint.position, snowBallSpawnPoint.rotation) as GameObject;
+        //Physics.IgnoreCollision(GetComponent<BoxCollider>(), snowBall.GetComponent<Collider>());
+        snowBall.AddComponent<Rigidbody>().AddForce(snowBallSpawnPoint.forward * 100f);
     }
 
     public void ApplyDamage(float dmg)

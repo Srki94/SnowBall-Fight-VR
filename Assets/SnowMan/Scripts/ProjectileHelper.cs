@@ -6,6 +6,7 @@ public class ProjectileHelper : MonoBehaviour {
     
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collision occured between : " + collision.gameObject);
         if (collision.gameObject.tag == "Enemy" )
         {
             EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
