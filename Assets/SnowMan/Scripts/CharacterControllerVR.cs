@@ -17,6 +17,7 @@ public class CharacterControllerVR : MonoBehaviour
 
         if (!snowBallSpawnPoint) { Debug.LogError("Snowball spawn point not set!");}
         if (!gm) { Debug.LogError("Couldn't find game manager in the scene"); }
+         
     }
 
     void Update()
@@ -50,8 +51,10 @@ public class CharacterControllerVR : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "CPUAmmo")
+        if (collision.gameObject.tag == "CPUAmmo"
+            && collision.gameObject.GetComponent<ProjectileHelper>().CanDamage)
         {
+            collision.gameObject.GetComponent<ProjectileHelper>().CanDamage = false;
             ApplyDamage(collision.gameObject.GetComponent<ProjectileHelper>().damage);
             GameObject.Destroy(collision.gameObject);
         }

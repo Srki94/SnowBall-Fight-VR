@@ -4,6 +4,7 @@ using System.Collections;
 public class ProjectileHelper : MonoBehaviour
 {
     public float damage = 35f;
+    public bool CanDamage = true;
 
     void Start()
     {
