@@ -7,22 +7,23 @@ public class CharacterControllerVR : MonoBehaviour
     public Transform snowBallSpawnPoint;
     public GameObject snowBallPrefab;
     public float  HP;
+    public bool isDead = false;
+
+    GameMgr gm;
 
     void Start()
     {
-        if (!snowBallSpawnPoint)
-        {
-            Debug.LogError("Snowball spawn point not set!");
-        }
-        
+        gm = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
+
+        if (!snowBallSpawnPoint) { Debug.LogError("Snowball spawn point not set!");}
+        if (!gm) { Debug.LogError("Couldn't find game manager in the scene"); }
     }
 
     void Update()
     {
-       
+        if (isDead) { return; }
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse press");
             ThrowSnowball();
         }
     }
@@ -39,7 +40,8 @@ public class CharacterControllerVR : MonoBehaviour
         HP -= dmg;
         if (HP <= 0f)
         {
-            /// todo : gameover s
+            isDead = true;
+            gm.InitGameOver();
         }
     }
 

@@ -13,9 +13,11 @@ public class EnemyManager : MonoBehaviour
 
     List<GameObject> enemiesInScene = new List<GameObject>();
     List<SpawnPosition> enemiesSpawnPositions = new List<SpawnPosition>();
+    GameMgr gmr;
 
     void Start()
     {
+        gmr = GetComponent<GameMgr>();
         SpawnEnemy();
     }
 
@@ -39,7 +41,7 @@ public class EnemyManager : MonoBehaviour
 
 
     public void SpawnEnemy()
-    { // TODO : Check if position is empty ... 
+    { 
         if (enemiesInScene.Count >= maxEnemiesInLevel)
         {
             return;
@@ -49,7 +51,14 @@ public class EnemyManager : MonoBehaviour
         GameObject dragon = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)],
                                                     enemySpawnPositions[f].position, enemySpawnPositions[f].rotation) as GameObject;
         dragon.GetComponent<EnemyController>().player = playerPos;
+        dragon.GetComponent<EnemyController>().enemyMgr = this;
         enemiesInScene.Add(dragon);
+    }
+
+    public void NotifyEnemyDeath()
+    {
+        gmr.enemiesToNextLevel--;
+        gmr.AddScore(1);
     }
 
 }

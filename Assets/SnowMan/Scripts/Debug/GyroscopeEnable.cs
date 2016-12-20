@@ -14,6 +14,7 @@ public class GyroscopeEnable : MonoBehaviour
             gyro = Input.gyro;
             gyro.enabled = true;
         }
+        DontDestroyOnLoad(this);
     }
 }
 
