@@ -21,7 +21,9 @@ public class CharacterControllerVR : MonoBehaviour
 
     void Update()
     {
-        if (isDead) { return; }
+        if (isDead) {
+            Debug.Log("DIED");
+            return; }
         if (Input.GetMouseButtonDown(0))
         {
             ThrowSnowball();
@@ -30,6 +32,7 @@ public class CharacterControllerVR : MonoBehaviour
 
     void ThrowSnowball()
     {
+        Debug.Log("Threw ball");
         GameObject snowBall = Instantiate(snowBallPrefab, snowBallSpawnPoint.position, snowBallSpawnPoint.rotation) as GameObject;
         snowBall.tag = "PlayerAmmo";
         snowBall.AddComponent<Rigidbody>().AddForce(snowBallSpawnPoint.forward * 500f);
