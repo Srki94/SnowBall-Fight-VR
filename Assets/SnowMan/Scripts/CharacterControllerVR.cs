@@ -30,8 +30,8 @@ public class CharacterControllerVR : MonoBehaviour
     void ThrowSnowball()
     {
         GameObject snowBall = Instantiate(snowBallPrefab, snowBallSpawnPoint.position, snowBallSpawnPoint.rotation) as GameObject;
-        //Physics.IgnoreCollision(GetComponent<BoxCollider>(), snowBall.GetComponent<Collider>());
-        snowBall.AddComponent<Rigidbody>().AddForce(snowBallSpawnPoint.forward * 100f);
+        snowBall.tag = "PlayerAmmo";
+        snowBall.AddComponent<Rigidbody>().AddForce(snowBallSpawnPoint.forward * 500f);
     }
 
     public void ApplyDamage(float dmg)
@@ -40,6 +40,15 @@ public class CharacterControllerVR : MonoBehaviour
         if (HP <= 0f)
         {
             /// todo : gameover s
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "CPUAmmo")
+        {
+            ApplyDamage(collision.gameObject.GetComponent<ProjectileHelper>().damage);
+            GameObject.Destroy(collision.gameObject);
         }
     }
 }

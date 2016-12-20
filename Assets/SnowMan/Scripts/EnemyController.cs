@@ -57,7 +57,8 @@ public class EnemyController : MonoBehaviour
     {
         animator.SetTrigger("Basic Attack");
         GameObject bullet = Instantiate(ballPrefab, ballSpawnPos.position, ballSpawnPos.rotation) as GameObject;
-        bullet.AddComponent<Rigidbody>().AddForce(Vector3.forward * 1500f);
+        bullet.tag = "CPUAmmo";
+        bullet.AddComponent<Rigidbody>().AddForce(Vector3.forward * 500f);
     }
 
     public void ApplyDamage(float dmg)
@@ -69,6 +70,15 @@ public class EnemyController : MonoBehaviour
             animator.SetTrigger("Die");
             GameObject.DestroyObject(gameObject, 2f);
         }
+        Debug.Log("Apply dmg : " + dmg + " Left : " + HP);
     }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "PlayerAmmo")
+        {
+            ApplyDamage(collision.gameObject.GetComponent<ProjectileHelper>().damage);
+            GameObject.Destroy(collision.gameObject);
+        }
+    }
 }

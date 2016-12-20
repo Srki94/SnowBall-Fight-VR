@@ -8,6 +8,7 @@ public class GameMgr : MonoBehaviour {
     public float enemyShootTimer;
     public float enemySpawnTimer;
     EnemyManager enemySpawner;
+    public int currScore = 0;
 
     public int enemiesToNextLevel = 0;
 
@@ -15,6 +16,7 @@ public class GameMgr : MonoBehaviour {
     {
         if (!enemySpawner) { enemySpawner = GetComponent<EnemyManager>(); }
         if (!Player) { Player = GameObject.FindWithTag("Player"); }
+        DontDestroyOnLoad(this);
     }
 
 
@@ -23,5 +25,18 @@ public class GameMgr : MonoBehaviour {
 
     }
 
-    
+    public void AddScore(int val)
+    {
+        currScore += val;
+    }
+
+    public void LoadNextLevel()
+    {
+
+    }
+
+    public void InitGameOver()
+    {
+
+    }
 }
