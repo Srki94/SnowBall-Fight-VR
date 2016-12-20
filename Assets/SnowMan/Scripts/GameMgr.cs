@@ -109,6 +109,11 @@ public class GameMgr : MonoBehaviour
         }
     }
 
+    public void SetDiff(DiffModifier diff)
+    {
+        difficulty = diff;
+    }
+
     void UpdateEnemyCnt()
     {
         if (EnemiesToNextLevel == 0)

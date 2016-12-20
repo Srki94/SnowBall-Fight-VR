@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuHelper : MonoBehaviour
 {
     int gameModeID = 0; // 0 VR 1 Gyro
+    int gameDiff = 0; // 0 Easy 1 Medium 2 Hard
 
     public Toggle vrTog;
     public Toggle gyrTog;
@@ -15,21 +16,15 @@ public class MainMenuHelper : MonoBehaviour
     {
         DontDestroyOnLoad(this);
     }
-    public void SetGameMode()
+
+    public void SetGameMode(int id)
     {
-        if (vrTog.isOn)
-        {
-            gameModeID = 0;
-        }
-        else if (gyrTog.isOn)
-        {
-            gameModeID = 1;
-        }
-        else
-        {
-            gameModeID = 1;
-        }
-        Debug.Log(gameModeID);
+        gameModeID = id;
+    }
+
+    public void SetGameDiff(int id)
+    {
+        gameDiff = id;
     }
 
     public void StartNewGame()
@@ -44,7 +39,8 @@ public class MainMenuHelper : MonoBehaviour
         if (!gmgr) { Debug.Log("Couldn't find game manager"); }
 
        gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
-        
+       gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
+
         GameObject.Destroy(this.gameObject);
     }
 
