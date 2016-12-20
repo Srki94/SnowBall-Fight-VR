@@ -33,7 +33,6 @@ public class CharacterControllerVR : MonoBehaviour
 
     void ThrowSnowball()
     {
-        Debug.Log("Threw ball");
         GameObject snowBall = Instantiate(snowBallPrefab, snowBallSpawnPoint.position, snowBallSpawnPoint.rotation) as GameObject;
         snowBall.tag = "PlayerAmmo";
         snowBall.AddComponent<Rigidbody>().AddForce(snowBallSpawnPoint.forward * 500f);

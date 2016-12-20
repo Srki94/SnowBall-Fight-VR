@@ -57,7 +57,7 @@ public class EnemyManager : MonoBehaviour
 
     public void NotifyEnemyDeath()
     {
-        gmr.enemiesToNextLevel--;
+        gmr.EnemiesToNextLevel--;
         gmr.AddScore(1);
     }
 

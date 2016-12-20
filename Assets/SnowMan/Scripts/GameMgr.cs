@@ -20,7 +20,7 @@ public class GameMgr : MonoBehaviour
     int _enemiesToNextLevel = 0;
     EnemyManager enemySpawner;
 
-    public int enemiesToNextLevel
+    public int EnemiesToNextLevel
     {
         get { return _enemiesToNextLevel; }
         set
@@ -48,7 +48,7 @@ public class GameMgr : MonoBehaviour
         switch (difficulty)
         {
             case DiffModifier.Easy:
-                enemiesToNextLevel = 15;
+                EnemiesToNextLevel = 15;
                 snowballDamageToEnemies = 35f;
                 snowballDamageToPlayer = 5f;
                 enemySpawner.SpawnTimer = 6f;
@@ -56,7 +56,7 @@ public class GameMgr : MonoBehaviour
                 break;
 
             case DiffModifier.Medium:
-                enemiesToNextLevel = 20;
+                EnemiesToNextLevel = 20;
                 snowballDamageToEnemies = 30f;
                 snowballDamageToPlayer = 10f;
                 enemySpawner.SpawnTimer = 5f;
@@ -64,7 +64,7 @@ public class GameMgr : MonoBehaviour
                 break;
 
             case DiffModifier.Hard:
-                enemiesToNextLevel = 30;
+                EnemiesToNextLevel = 30;
                 snowballDamageToEnemies = 25f;
                 snowballDamageToPlayer = 15f;
                 enemySpawner.SpawnTimer = 4f;
@@ -111,7 +111,7 @@ public class GameMgr : MonoBehaviour
 
     void UpdateEnemyCnt()
     {
-        if (enemiesToNextLevel == 0)
+        if (EnemiesToNextLevel == 0)
         {
             LoadNextLevel();
         }
