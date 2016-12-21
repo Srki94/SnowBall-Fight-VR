@@ -19,7 +19,13 @@ public class CharacterControllerVR : MonoBehaviour
 
         if (!snowBallSpawnPoint) { Debug.LogError("Snowball spawn point not set!");}
         if (!gm) { Debug.LogError("Couldn't find game manager in the scene"); }
-         
+        MagnetSensor.OnCardboardTrigger += MagnetSensor_OnCardboardTrigger;
+    }
+
+    private void MagnetSensor_OnCardboardTrigger()
+    {
+        Debug.Log("trigger");
+        ThrowSnowball();
     }
 
     void Update()

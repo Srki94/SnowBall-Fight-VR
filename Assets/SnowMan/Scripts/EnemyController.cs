@@ -97,10 +97,12 @@ public class EnemyController : MonoBehaviour
         HP -= dmg;
         if (HP <= 0f && !isDying)
         {
-            sfxSource.clip = sfxStorage.GetSFX("OnEnemyDeath");
-            sfxSource.loop = false;
-            sfxSource.Play();
-
+            if (!isDying)
+            {
+                sfxSource.clip = sfxStorage.GetSFX("OnEnemyDeath");
+                sfxSource.loop = false;
+                sfxSource.Play();
+            }
             isDying = true;
             animator.Play("die");
 

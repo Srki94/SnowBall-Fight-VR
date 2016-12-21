@@ -18,6 +18,12 @@ public class MagnetSensor : MonoBehaviour
     {
         _sensorData = new List<Vector3>(WINDOW_SIZE);
         _offsets = new float[SEGMENT_SIZE];
+        OnCardboardTrigger += MagnetSensor_OnCardboardTrigger;
+    }
+
+    private void MagnetSensor_OnCardboardTrigger()
+    {
+        Debug.Log("Event Static");
     }
 
     void OnEnable()
