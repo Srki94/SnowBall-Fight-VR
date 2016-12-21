@@ -24,7 +24,8 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         SpawnTimer -= 1f * Time.deltaTime;
-        if (SpawnTimer <= 0f)
+        if (SpawnTimer <= 0f 
+            && !gmr.IsGameOver)
         {
             SpawnTimer = 3f;
             SpawnEnemy();
@@ -39,6 +40,15 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public void DespawnAllEnemies()
+    {
+        foreach(GameObject enemy in enemiesInScene)
+        {
+            enemy.GetComponent<EnemyController>().Die();
+        }
+
+        enemiesInScene.Clear();
+    }
 
     public void SpawnEnemy()
     { 
@@ -55,9 +65,11 @@ public class EnemyManager : MonoBehaviour
         enemiesInScene.Add(dragon);
     }
 
-    public void NotifyEnemyDeath()
+    public void NotifyEnemyDeath(GameObject unit)
     {
         gmr.EnemiesToNextLevel--;
+        enemiesInScene.Remove(unit);
+
         gmr.AddScore(1);
     }
 

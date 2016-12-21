@@ -22,18 +22,20 @@ public class CharacterControllerVR : MonoBehaviour
         MagnetSensor.OnCardboardTrigger += MagnetSensor_OnCardboardTrigger;
     }
 
-    private void MagnetSensor_OnCardboardTrigger()
-    {
-        Debug.Log("trigger");
-        ThrowSnowball();
-    }
+   private void MagnetSensor_OnCardboardTrigger()
+   {
+        if (gm.controllerType == GameMgr.ControllerType.Magnet)
+        {
+            ThrowSnowball();
+        }
+   }
 
     void Update()
     {
         if (isDead) {
             Debug.Log("DIED");
             return; }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && gm.controllerType == GameMgr.ControllerType.Touch)
         {
             ThrowSnowball();
         }

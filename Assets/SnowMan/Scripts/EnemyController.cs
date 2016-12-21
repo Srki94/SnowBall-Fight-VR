@@ -106,9 +106,15 @@ public class EnemyController : MonoBehaviour
             isDying = true;
             animator.Play("die");
 
+            
             GameObject.DestroyObject(gameObject, 2f);
-            enemyMgr.NotifyEnemyDeath();
+            enemyMgr.NotifyEnemyDeath(gameObject);
         }
+    }
+
+    public void Die()
+    {
+        ApplyDamage(100f);
     }
 
     public void OnCollisionEnter(Collision collision)

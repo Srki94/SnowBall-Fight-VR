@@ -7,6 +7,7 @@ public class MainMenuHelper : MonoBehaviour
 {
     int gameModeID = 0; // 0 VR 1 Gyro
     int gameDiff = 0; // 0 Easy 1 Medium 2 Hard
+    int controllerType = 0; // 0 Touch 1 Magnet 2 Auto
 
     public Toggle vrTog;
     public Toggle gyrTog;
@@ -27,6 +28,11 @@ public class MainMenuHelper : MonoBehaviour
         gameDiff = id;
     }
 
+    public void SetGameControllerType(int id)
+    {
+        controllerType = id;
+    }
+
     public void StartNewGame()
     { 
         SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
@@ -40,6 +46,7 @@ public class MainMenuHelper : MonoBehaviour
 
        gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
        gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
+       gmgr.controllerType = ((GameMgr.ControllerType)controllerType);
 
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
         GameObject.Destroy(this.gameObject);
