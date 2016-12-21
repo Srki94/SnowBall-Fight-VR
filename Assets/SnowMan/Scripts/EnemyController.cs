@@ -12,18 +12,22 @@ public class EnemyController : MonoBehaviour
     public EnemyManager enemyMgr;
     public float moveSpeed = .6f;
 
+    SFXBank sfxStorage;
     NavMeshAgent thisAgent;
     Animator animator;
     float shootRate = 1.5f;
     float sliceAmount = 0f;
     bool isDying = false;
     Renderer thisRend;
+    AudioSource sfxSource;
 
     void Start()
     {
         thisAgent = GetComponent<NavMeshAgent>();
         thisRend = GetComponentInChildren<Renderer>();
         animator = GetComponent<Animator>();
+        sfxSource = GetComponent<AudioSource>();
+        sfxStorage = GameObject.FindWithTag("GameController").GetComponent<SFXBank>();
         HP = 100f;
         thisAgent.speed = moveSpeed;
     }
@@ -44,6 +48,9 @@ public class EnemyController : MonoBehaviour
                 if (!animator.GetBool("IsWalking"))
                 {
                     animator.SetBool("IsWalking", true);
+                    sfxSource.clip = sfxStorage.GetSFX("OnEnemyWalk");
+                    sfxSource.loop = true;
+                    sfxSource.Play();
                 }
             }
             else
@@ -90,6 +97,10 @@ public class EnemyController : MonoBehaviour
         HP -= dmg;
         if (HP <= 0f && !isDying)
         {
+            sfxSource.clip = sfxStorage.GetSFX("OnEnemyDeath");
+            sfxSource.loop = false;
+            sfxSource.Play();
+
             isDying = true;
             animator.Play("die");
 
@@ -103,6 +114,9 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "PlayerAmmo"
             && collision.gameObject.GetComponent<ProjectileHelper>().CanDamage)
         {
+            sfxSource.clip = sfxStorage.GetSFX("OnEnemyHit");
+            sfxSource.loop = false;
+            sfxSource.Play();
             collision.gameObject.GetComponent<ProjectileHelper>().CanDamage = false;
             ApplyDamage(collision.gameObject.GetComponent<ProjectileHelper>().damage);
             GameObject.Destroy(collision.gameObject);

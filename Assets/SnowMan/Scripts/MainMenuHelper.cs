@@ -28,7 +28,7 @@ public class MainMenuHelper : MonoBehaviour
     }
 
     public void StartNewGame()
-    { // wait for level to load -> configure game manager -> destroy self
+    { 
         SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
@@ -41,6 +41,7 @@ public class MainMenuHelper : MonoBehaviour
        gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
        gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
 
+        SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
         GameObject.Destroy(this.gameObject);
     }
 

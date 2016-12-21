@@ -10,10 +10,12 @@ public class CharacterControllerVR : MonoBehaviour
     public bool isDead = false;
 
     GameMgr gm;
+    AudioSource sfxSource;
 
     void Start()
     {
         gm = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
+        sfxSource = GetComponent<AudioSource>();
 
         if (!snowBallSpawnPoint) { Debug.LogError("Snowball spawn point not set!");}
         if (!gm) { Debug.LogError("Couldn't find game manager in the scene"); }
@@ -53,6 +55,9 @@ public class CharacterControllerVR : MonoBehaviour
         if (collision.gameObject.tag == "CPUAmmo"
             && collision.gameObject.GetComponent<ProjectileHelper>().CanDamage)
         {
+            sfxSource.clip = gm.GetComponent<SFXBank>().GetSFX("OnPlayerHit");
+            sfxSource.Play();
+
             collision.gameObject.GetComponent<ProjectileHelper>().CanDamage = false;
             ApplyDamage(collision.gameObject.GetComponent<ProjectileHelper>().damage);
             GameObject.Destroy(collision.gameObject);
