@@ -80,6 +80,11 @@ public class GameMgr : MonoBehaviour
                 enemySpawner.maxEnemiesInLevel = 8;
                 break;
         }
+
+        announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>()
+            .SetActiveElement(SnowmanAnnouncerController.AnnouncerType.NewLevel);
+
+
     }
 
     void Update()
@@ -94,14 +99,35 @@ public class GameMgr : MonoBehaviour
 
     public void LoadNextLevel()
     {
-
+        Debug.Log("Load next level called");
     }
 
+    public void ResetCurrLevel()
+    {
+        Debug.Log("reset level called");
+    }
+
+    public void NextDiff()
+    {
+        if(difficulty == DiffModifier.Easy)
+        {
+            SetDiff(DiffModifier.Medium);
+        }
+        else if (difficulty == DiffModifier.Medium)
+        {
+            SetDiff(DiffModifier.Hard);
+        }
+        else if (difficulty == DiffModifier.Hard)
+        {
+            SetDiff(DiffModifier.Easy);
+        }
+        announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>().UpdateDiffText();
+    }
     public void InitGameOver()
     {
         IsGameOver = true;
         enemySpawner.DespawnAllEnemies();
-        Time.timeScale = 0.3f;
+        //Time.timeScale = 0.3f;
         announcerSnowmanGO.SetActive(true);
         announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>()
             .SetActiveElement(SnowmanAnnouncerController.AnnouncerType.Gameover);

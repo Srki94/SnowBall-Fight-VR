@@ -28,9 +28,8 @@ public class EnemyManager : MonoBehaviour
 
     public void InitNewLevelCountdown()
     {
-        //snowmanAnnouncer.gameObject.SetActive(true);
+        snowmanAnnouncer.gameObject.SetActive(true);
         snowmanAnnouncer.SetActiveElement(SnowmanAnnouncerController.AnnouncerType.NewLevel);
-         
         isCountingDown = true;
         initLvlCountdown = 5f;
     }
@@ -43,10 +42,12 @@ public class EnemyManager : MonoBehaviour
             if (initLvlCountdown < 0f)
             {
                 isCountingDown = false;
+                snowmanAnnouncer.Despawn();
+                SpawnTimer = 0.3f;
             }
             else
             {
-                snowmanAnnouncer.UpdateCountdownText(initLvlCountdown.ToString());
+                snowmanAnnouncer.UpdateCountdownText(Mathf.RoundToInt(initLvlCountdown).ToString());
             }
         }
         else
@@ -72,12 +73,10 @@ public class EnemyManager : MonoBehaviour
 
     public void DespawnAllEnemies()
     {
-        foreach (GameObject enemy in enemiesInScene)
+        for (var i =0; i<= enemiesInScene.Count; i++)
         {
-            enemy.GetComponent<EnemyController>().Die();
+            enemiesInScene[i].GetComponent<EnemyController>().Die();
         }
-
-        enemiesInScene.Clear();
     }
 
     public void SpawnEnemy()

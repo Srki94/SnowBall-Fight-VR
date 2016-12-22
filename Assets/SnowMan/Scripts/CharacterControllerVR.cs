@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- 
+
 public class CharacterControllerVR : MonoBehaviour
 {
     public Transform snowBallSpawnPoint;
     public GameObject snowBallPrefab;
-    public float  HP;
+    public float HP;
     public bool isDead = false;
 
     GameMgr gm;
@@ -17,24 +17,29 @@ public class CharacterControllerVR : MonoBehaviour
         gm = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
         sfxSource = GetComponent<AudioSource>();
 
-        if (!snowBallSpawnPoint) { Debug.LogError("Snowball spawn point not set!");}
+        if (!snowBallSpawnPoint) { Debug.LogError("Snowball spawn point not set!"); }
         if (!gm) { Debug.LogError("Couldn't find game manager in the scene"); }
         MagnetSensor.OnCardboardTrigger += MagnetSensor_OnCardboardTrigger;
     }
 
-   private void MagnetSensor_OnCardboardTrigger()
-   {
+    private void MagnetSensor_OnCardboardTrigger()
+    {
         if (gm.controllerType == GameMgr.ControllerType.Magnet)
         {
             ThrowSnowball();
         }
-   }
+    }
 
     void Update()
     {
-        if (isDead) {
-            gm.InitGameOver();
-            return; }
+        if (isDead)
+        {
+           // if (!gm.IsGameOver)
+           // {
+           //     gm.InitGameOver();
+           // }
+           // return;
+        }
         if (Input.GetMouseButtonDown(0) && gm.controllerType == GameMgr.ControllerType.Touch)
         {
             ThrowSnowball();
@@ -51,7 +56,7 @@ public class CharacterControllerVR : MonoBehaviour
     public void ApplyDamage(float dmg)
     {
         HP -= dmg;
-        if (HP <= 0f)
+        if (HP <= 0f && !isDead)
         {
             isDead = true;
             gm.InitGameOver();

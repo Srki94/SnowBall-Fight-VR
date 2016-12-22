@@ -9,12 +9,13 @@ public class CallUIEventOnCollision : MonoBehaviour
 
     void Start()
     {
-        targetGO = transform.parent.gameObject;
-     
+        targetGO = gameObject;
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag != "PlayerAmmo") { return; }
+
         var pointer = new PointerEventData(EventSystem.current);
         ExecuteEvents.Execute(targetGO, pointer, ExecuteEvents.pointerClickHandler);
         Debug.Log("UI Hit");
