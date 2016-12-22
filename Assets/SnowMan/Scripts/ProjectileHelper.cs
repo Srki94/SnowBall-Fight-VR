@@ -5,7 +5,7 @@ public class ProjectileHelper : MonoBehaviour
 {
     public float damage = 35f;
     public bool CanDamage = true;
-
+ 
     void Start()
     {
         if (tag == "CPUAmmo")
@@ -15,7 +15,6 @@ public class ProjectileHelper : MonoBehaviour
         else if (tag == "PlayerAmmo")
         {
             damage = GameObject.FindWithTag("GameController").GetComponent<GameMgr>().snowballDamageToEnemies;
-
         }
     }
 
@@ -25,6 +24,11 @@ public class ProjectileHelper : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             GameObject.Destroy(gameObject, 2f);
+        }
+        else if (collision.gameObject.tag == "CPUAmmo"
+            && gameObject.tag == "PlayerAmmo")
+        {
+            GameMgr.playerScoreData.ballsHit++;
         }
     }
 }

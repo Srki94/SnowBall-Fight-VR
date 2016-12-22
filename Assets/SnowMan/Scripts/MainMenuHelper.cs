@@ -44,10 +44,11 @@ public class MainMenuHelper : MonoBehaviour
         GameMgr gmgr = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
         if (!gmgr) { Debug.Log("Couldn't find game manager"); }
 
+        GAMESESSION.GAMEPLAY_TYPE = (GameMgr.GameplayType)gameModeID;
+
        gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
        gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
-       gmgr.controllerType = ((GameMgr.ControllerType)controllerType);
-
+       gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
         GameObject.Destroy(this.gameObject);
     }

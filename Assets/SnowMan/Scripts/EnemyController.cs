@@ -101,8 +101,13 @@ public class EnemyController : MonoBehaviour
     public void ApplyDamage(float dmg)
     {
         HP -= dmg;
+        GameMgr.playerScoreData.monstersHit++;
+
         if (HP <= 0f && !isDying)
         {
+           // GameMgr.playerScoreData.monstersKilled++;
+            GameMgr.playerScoreData.sessionScore++;
+
             if (!isDying)
             {
                 GetComponent<BoxCollider>().enabled = false;

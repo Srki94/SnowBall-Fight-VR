@@ -65,10 +65,7 @@ public class EnemyManager : MonoBehaviour
 
     public void RemoveAllEnemies()
     {
-        for (var i = 0; i <= enemiesInScene.Count - 1; i++)
-        {
-            GameObject.Destroy(enemiesInScene[i]);
-        }
+        enemiesInScene.Clear();
     }
 
     public void DespawnAllEnemies()
@@ -86,6 +83,7 @@ public class EnemyManager : MonoBehaviour
         if (enemiesInScene.Count >= maxEnemiesInLevel
             || gmr.EnemiesToNextLevel <= 0)
         {
+            Debug.Log(gmr.EnemiesToNextLevel + " spawner");
             return;
         }
         var f = Random.Range(0, enemySpawnPositions.Length);
@@ -100,9 +98,8 @@ public class EnemyManager : MonoBehaviour
     public void NotifyEnemyDeath(GameObject unit)
     {
         gmr.EnemiesToNextLevel--;
+        GameMgr.playerScoreData.sessionScore++;
       //  enemiesInScene.Remove(unit);
-
-        gmr.AddScore(1);
     }
 
 }

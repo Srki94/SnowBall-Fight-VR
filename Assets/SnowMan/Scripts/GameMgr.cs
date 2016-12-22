@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SnowMan.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameMgr : MonoBehaviour
 {
     public enum DiffModifier { Easy, Medium, Hard, None };
-    public enum GameplayType { VR = 0, Gyro = 1};
-    public enum ControllerType { Touch = 0,Magnet = 1, Auto = 2 }
+    public enum GameplayType { VR = 0, Gyro = 1 };
+    public enum ControllerType { Touch = 0, Magnet = 1, Auto = 2 }
 
     public GameObject Player;
     public float enemyShootTimer = 0f;
@@ -18,15 +19,17 @@ public class GameMgr : MonoBehaviour
     public DiffModifier difficulty = DiffModifier.None;
     public GameplayType gameplayType = GameplayType.VR;
     public ControllerType controllerType = ControllerType.Touch;
-     
+    public static ScoreData playerScoreData = new ScoreData();
+
     public GameObject deviceVRController;
     public GameObject announcerSnowmanGO;
     public int currLevelID = 1;
-    
+
     public bool IsGameOver = false;
 
     int _enemiesToNextLevel = 0;
     EnemyManager enemySpawner;
+    float sessionPlayerAlive = 0f;
 
     public int EnemiesToNextLevel
     {
@@ -47,8 +50,10 @@ public class GameMgr : MonoBehaviour
             Destroy(this);
         }
     }
+
     void Start()
     {
+
         if (!enemySpawner) { enemySpawner = GetComponent<EnemyManager>(); }
         if (!Player) { Player = GameObject.FindWithTag("Player"); }
         if (!deviceVRController) { deviceVRController = GameObject.FindWithTag("GVRMain"); }
@@ -56,9 +61,18 @@ public class GameMgr : MonoBehaviour
         DontDestroyOnLoad(this);
 
         InitNewGame();
+
     }
 
-    void InitNewGame()
+    void Update()
+    {
+        if (!IsGameOver)
+        {
+            sessionPlayerAlive += 1f * Time.deltaTime;
+        }
+    }
+
+    void InitNewGame(bool reloading = false)
     {
         if (difficulty == DiffModifier.None)
         {
@@ -91,21 +105,11 @@ public class GameMgr : MonoBehaviour
                 enemySpawner.maxEnemiesInLevel = 8;
                 break;
         }
-
+        if (reloading) { announcerSnowmanGO = GameObject.FindGameObjectWithTag("Announcer"); }
         announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>()
             .SetActiveElement(SnowmanAnnouncerController.AnnouncerType.NewLevel);
 
 
-    }
-
-    void Update()
-    {
-
-    }
-
-    public void AddScore(int val)
-    {
-        currScore += val;
     }
 
     public void LoadNextLevel()
@@ -115,12 +119,28 @@ public class GameMgr : MonoBehaviour
 
     public void ResetCurrLevel()
     {
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        Reconfig();
+        Debug.Log(EnemiesToNextLevel + " enemies to next lvl GMR");
+    }
+
+    void Reconfig()
+    {
+        SetGameplayType(gameplayType, true);
+        SetDiff(difficulty);
+        SetControllerType(controllerType);
+        InitNewGame(true);
+        enemySpawner.RemoveAllEnemies();
     }
 
     public void NextDiff()
     {
-        if(difficulty == DiffModifier.Easy)
+        if (difficulty == DiffModifier.Easy)
         {
             SetDiff(DiffModifier.Medium);
         }
@@ -134,14 +154,29 @@ public class GameMgr : MonoBehaviour
         }
         announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>().UpdateDiffText();
     }
+
     public void InitGameOver()
     {
         IsGameOver = true;
+        HandleScore();
         enemySpawner.DespawnAllEnemies();
-        //Time.timeScale = 0.3f;
         announcerSnowmanGO.SetActive(true);
         announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>()
             .SetActiveElement(SnowmanAnnouncerController.AnnouncerType.Gameover);
+    }
+
+    void HandleScore()
+    {
+        if (sessionPlayerAlive > playerScoreData.longestSurvived)
+        {
+            playerScoreData.longestSurvived = sessionPlayerAlive;
+        }
+        playerScoreData.lastScore = playerScoreData.sessionScore;
+        playerScoreData.sessionScore = 0;
+
+        playerScoreData.SaveScores();
+
+        sessionPlayerAlive = 0f;
     }
 
     public void InitLvlComplete()
@@ -149,16 +184,22 @@ public class GameMgr : MonoBehaviour
 
     }
 
-    public void SetGameplayType(GameplayType type)
+    public void SetGameplayType(GameplayType type, bool sceneReload = false)
     {
+        if (sceneReload)
+        {
+            deviceVRController = GameObject.FindGameObjectWithTag("GVRMain");
+        }
         switch (type)
         {
             case GameplayType.VR:
                 deviceVRController.GetComponent<GvrViewer>().VRModeEnabled = true;
+                gameplayType = GameplayType.VR;
                 break;
 
             case GameplayType.Gyro:
                 deviceVRController.GetComponent<GvrViewer>().VRModeEnabled = false;
+                gameplayType = GameplayType.Gyro;
                 break;
         }
     }
@@ -168,6 +209,10 @@ public class GameMgr : MonoBehaviour
         difficulty = diff;
     }
 
+    public void SetControllerType(ControllerType type)
+    {
+        controllerType = type;
+    }
     void UpdateEnemyCnt()
     {
         if (EnemiesToNextLevel == 0)
