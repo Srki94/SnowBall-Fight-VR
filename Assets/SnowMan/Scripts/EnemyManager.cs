@@ -10,26 +10,56 @@ public class EnemyManager : MonoBehaviour
     public Transform playerPos;
     public float SpawnTimer = 5f;
     public int maxEnemiesInLevel = 5;
+    public SnowmanAnnouncerController snowmanAnnouncer;
 
     List<GameObject> enemiesInScene = new List<GameObject>();
     List<SpawnPosition> enemiesSpawnPositions = new List<SpawnPosition>();
     GameMgr gmr;
+    bool isCountingDown;
+    float initLvlCountdown = 5f;
 
     void Start()
     {
         gmr = GetComponent<GameMgr>();
+        snowmanAnnouncer = gmr.announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>();
+        InitNewLevelCountdown();
         SpawnEnemy();
+    }
+
+    public void InitNewLevelCountdown()
+    {
+        //snowmanAnnouncer.gameObject.SetActive(true);
+        snowmanAnnouncer.SetActiveElement(SnowmanAnnouncerController.AnnouncerType.NewLevel);
+         
+        isCountingDown = true;
+        initLvlCountdown = 5f;
     }
 
     void Update()
     {
-        SpawnTimer -= 1f * Time.deltaTime;
-        if (SpawnTimer <= 0f 
-            && !gmr.IsGameOver)
+        if (isCountingDown)
         {
-            SpawnTimer = 3f;
-            SpawnEnemy();
+            initLvlCountdown -= 1f * Time.deltaTime;
+            if (initLvlCountdown < 0f)
+            {
+                isCountingDown = false;
+            }
+            else
+            {
+                snowmanAnnouncer.UpdateCountdownText(initLvlCountdown.ToString());
+            }
         }
+        else
+        {
+            SpawnTimer -= 1f * Time.deltaTime;
+            if (SpawnTimer <= 0f
+                && !gmr.IsGameOver)
+            {
+                SpawnTimer = 3f;
+                SpawnEnemy();
+            }
+        }
+
     }
 
     public void RemoveAllEnemies()
@@ -42,7 +72,7 @@ public class EnemyManager : MonoBehaviour
 
     public void DespawnAllEnemies()
     {
-        foreach(GameObject enemy in enemiesInScene)
+        foreach (GameObject enemy in enemiesInScene)
         {
             enemy.GetComponent<EnemyController>().Die();
         }
@@ -51,7 +81,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     public void SpawnEnemy()
-    { 
+    {
         if (enemiesInScene.Count >= maxEnemiesInLevel
             || gmr.EnemiesToNextLevel <= 0)
         {

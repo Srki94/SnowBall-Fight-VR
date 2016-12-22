@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class EnemyController : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class EnemyController : MonoBehaviour
     bool isDying = false;
     Renderer thisRend;
     AudioSource sfxSource;
+    
+    public AudioMixerGroup snowballSFXMixer;
+    public AudioMixerGroup masterSFXMixer;
 
     void Start()
     {
@@ -48,6 +52,7 @@ public class EnemyController : MonoBehaviour
                 if (!animator.GetBool("IsWalking"))
                 {
                     animator.SetBool("IsWalking", true);
+                    sfxSource.outputAudioMixerGroup = masterSFXMixer;
                     sfxSource.clip = sfxStorage.GetSFX("OnEnemyWalk");
                     sfxSource.loop = true;
                     sfxSource.Play();
@@ -58,6 +63,7 @@ public class EnemyController : MonoBehaviour
                 if (animator.GetBool("IsWalking"))
                 {
                     animator.SetBool("IsWalking", false);
+                    sfxSource.clip = null;
                 }
                 thisAgent.speed = 0f;
 
@@ -99,6 +105,7 @@ public class EnemyController : MonoBehaviour
         {
             if (!isDying)
             {
+                GetComponent<BoxCollider>().enabled = false;
                 sfxSource.clip = sfxStorage.GetSFX("OnEnemyDeath");
                 sfxSource.loop = false;
                 sfxSource.Play();
@@ -122,6 +129,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "PlayerAmmo"
             && collision.gameObject.GetComponent<ProjectileHelper>().CanDamage)
         {
+            sfxSource.outputAudioMixerGroup = snowballSFXMixer;
             sfxSource.clip = sfxStorage.GetSFX("OnEnemyHit");
             sfxSource.loop = false;
             sfxSource.Play();

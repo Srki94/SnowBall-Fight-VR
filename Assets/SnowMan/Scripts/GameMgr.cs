@@ -19,7 +19,7 @@ public class GameMgr : MonoBehaviour
     public ControllerType controllerType = ControllerType.Touch;
      
     public GameObject deviceVRController;
-    public GameObject gameOverGO;
+    public GameObject announcerSnowmanGO;
 
     public bool IsGameOver = false;
 
@@ -102,7 +102,9 @@ public class GameMgr : MonoBehaviour
         IsGameOver = true;
         enemySpawner.DespawnAllEnemies();
         Time.timeScale = 0.3f;
-        gameOverGO.SetActive(true);
+        announcerSnowmanGO.SetActive(true);
+        announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>()
+            .SetActiveElement(SnowmanAnnouncerController.AnnouncerType.Gameover);
     }
 
     public void InitLvlComplete()
