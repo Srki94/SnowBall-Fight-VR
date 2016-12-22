@@ -47,6 +47,10 @@ public class EnemyController : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, player.position) > 5.5f)
             {
+                if (!gameObject.GetComponent<NavMeshAgent>().enabled)
+                {
+                    gameObject.GetComponent<NavMeshAgent>().enabled = true;
+                }
                 thisAgent.SetDestination(player.position);
                 thisAgent.speed = moveSpeed;
                 if (!animator.GetBool("IsWalking"))
@@ -60,6 +64,10 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
+                if (gameObject.GetComponent<NavMeshAgent>().enabled)
+                {
+                    gameObject.GetComponent<NavMeshAgent>().enabled = false;
+                }
                 if (animator.GetBool("IsWalking"))
                 {
                     animator.SetBool("IsWalking", false);
@@ -101,12 +109,12 @@ public class EnemyController : MonoBehaviour
     public void ApplyDamage(float dmg)
     {
         HP -= dmg;
-        GameMgr.playerScoreData.monstersHit++;
+        GAMESESSION.SCORE.monstersHit++;
 
         if (HP <= 0f && !isDying)
         {
-           // GameMgr.playerScoreData.monstersKilled++;
-            GameMgr.playerScoreData.sessionScore++;
+            // GameMgr.playerScoreData.monstersKilled++;
+            GAMESESSION.SCORE.sessionScore++;
 
             if (!isDying)
             {

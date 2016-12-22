@@ -19,7 +19,7 @@ public class GameMgr : MonoBehaviour
     public DiffModifier difficulty = DiffModifier.None;
     public GameplayType gameplayType = GameplayType.VR;
     public ControllerType controllerType = ControllerType.Touch;
-    public static ScoreData playerScoreData = new ScoreData();
+   // public static ScoreData playerScoreData = new ScoreData();
 
     public GameObject deviceVRController;
     public GameObject announcerSnowmanGO;
@@ -58,8 +58,8 @@ public class GameMgr : MonoBehaviour
         if (!Player) { Player = GameObject.FindWithTag("Player"); }
         if (!deviceVRController) { deviceVRController = GameObject.FindWithTag("GVRMain"); }
 
-        DontDestroyOnLoad(this);
-
+        //DontDestroyOnLoad(this);
+        SetGameplayType(GameplayType.Gyro);
         InitNewGame();
 
     }
@@ -167,14 +167,14 @@ public class GameMgr : MonoBehaviour
 
     void HandleScore()
     {
-        if (sessionPlayerAlive > playerScoreData.longestSurvived)
+        if (sessionPlayerAlive > GAMESESSION.SCORE.longestSurvived)
         {
-            playerScoreData.longestSurvived = sessionPlayerAlive;
+            GAMESESSION.SCORE.longestSurvived = sessionPlayerAlive;
         }
-        playerScoreData.lastScore = playerScoreData.sessionScore;
-        playerScoreData.sessionScore = 0;
+        GAMESESSION.SCORE.lastScore = GAMESESSION.SCORE.sessionScore;
+        GAMESESSION.SCORE.sessionScore = 0;
 
-        playerScoreData.SaveScores();
+        GAMESESSION.SCORE.SaveScores();
 
         sessionPlayerAlive = 0f;
     }

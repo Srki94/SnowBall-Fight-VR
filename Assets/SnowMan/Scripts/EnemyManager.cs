@@ -83,8 +83,6 @@ public class EnemyManager : MonoBehaviour
         if (enemiesInScene.Count >= maxEnemiesInLevel
             || gmr.EnemiesToNextLevel <= 0)
         {
-            Debug.Log(gmr.EnemiesToNextLevel + " spawner");
-            Debug.Log(GAMESESSION.GAMEPLAY_TYPE.ToString());
             return;
         }
         var f = Random.Range(0, enemySpawnPositions.Length);
@@ -99,8 +97,7 @@ public class EnemyManager : MonoBehaviour
     public void NotifyEnemyDeath(GameObject unit)
     {
         gmr.EnemiesToNextLevel--;
-        GameMgr.playerScoreData.sessionScore++;
-      //  enemiesInScene.Remove(unit);
+       GAMESESSION.SCORE.sessionScore++;
     }
 
 }

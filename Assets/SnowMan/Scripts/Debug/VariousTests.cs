@@ -5,7 +5,7 @@ public class VariousTests : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GameMgr.playerScoreData.LoadScores();
+        GAMESESSION.SCORE.LoadScores();
 	}
 	
 	// Update is called once per frame

@@ -28,7 +28,7 @@ public class ProjectileHelper : MonoBehaviour
         else if (collision.gameObject.tag == "CPUAmmo"
             && gameObject.tag == "PlayerAmmo")
         {
-            GameMgr.playerScoreData.ballsHit++;
+            GAMESESSION.SCORE.ballsHit++;
         }
     }
 }
