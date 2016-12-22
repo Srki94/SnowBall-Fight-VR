@@ -11,6 +11,8 @@ public class SnowmanAnnouncerController : MonoBehaviour
     public AnnouncerType thisAnnouncertype;
     public Text countdownText;
     public Text diffTxt;
+    public Text levelName;
+
     GameMgr GameMgr;
 
     Animator thisAnimator;
@@ -47,6 +49,17 @@ public class SnowmanAnnouncerController : MonoBehaviour
             {
                 go.SetActive(true);
             }
+
+            string tmp = "";
+            if (GameMgr.currLevelID == 1)
+            {
+                tmp = "One";
+            }
+            else
+            {
+                tmp = "Two";
+            }
+            levelName.text = "Level " + tmp;
         }
 
         thisAnimator.SetTrigger("Spawn");
@@ -58,6 +71,8 @@ public class SnowmanAnnouncerController : MonoBehaviour
         diffTxt.text = GameMgr.difficulty.ToString();
 
     }
+
+   
 
     public void UpdateCountdownText(string txt)
     {

@@ -73,9 +73,11 @@ public class EnemyManager : MonoBehaviour
 
     public void DespawnAllEnemies()
     {
-        for (var i =0; i<= enemiesInScene.Count; i++)
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (var i =0; i<= enemies.Length-1; i++)
         {
-            enemiesInScene[i].GetComponent<EnemyController>().Die();
+            enemies[i].GetComponent<EnemyController>().Die();
         }
     }
 
@@ -98,7 +100,7 @@ public class EnemyManager : MonoBehaviour
     public void NotifyEnemyDeath(GameObject unit)
     {
         gmr.EnemiesToNextLevel--;
-        enemiesInScene.Remove(unit);
+      //  enemiesInScene.Remove(unit);
 
         gmr.AddScore(1);
     }

@@ -32,14 +32,14 @@ public class CharacterControllerVR : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
-        {
-           // if (!gm.IsGameOver)
-           // {
-           //     gm.InitGameOver();
-           // }
-           // return;
-        }
+       // if (isDead)
+       // {
+       //    // if (!gm.IsGameOver)
+       //    // {
+       //    //     gm.InitGameOver();
+       //    // }
+       //     return;
+       // }
         if (Input.GetMouseButtonDown(0) && gm.controllerType == GameMgr.ControllerType.Touch)
         {
             ThrowSnowball();

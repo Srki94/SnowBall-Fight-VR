@@ -69,8 +69,8 @@ public class EnemyController : MonoBehaviour
 
                 if (shootRate <= 0f)
                 {
-                    Shoot(player.position);
                     shootRate = 1.5f;
+                    Shoot(player.position);
                 }
                 else
                 {

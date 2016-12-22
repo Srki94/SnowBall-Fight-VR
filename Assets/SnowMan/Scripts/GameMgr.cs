@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameMgr : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class GameMgr : MonoBehaviour
      
     public GameObject deviceVRController;
     public GameObject announcerSnowmanGO;
-
+    public int currLevelID = 1;
+    
     public bool IsGameOver = false;
 
     int _enemiesToNextLevel = 0;
@@ -36,6 +38,15 @@ public class GameMgr : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        GameObject[] test = GameObject.FindGameObjectsWithTag("GameController");
+
+        if (test.Length > 1)
+        {
+            Destroy(this);
+        }
+    }
     void Start()
     {
         if (!enemySpawner) { enemySpawner = GetComponent<EnemyManager>(); }
@@ -99,12 +110,12 @@ public class GameMgr : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        Debug.Log("Load next level called");
+        Debug.Log("Called next level");
     }
 
     public void ResetCurrLevel()
     {
-        Debug.Log("reset level called");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void NextDiff()

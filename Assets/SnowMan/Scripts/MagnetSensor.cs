@@ -16,6 +16,13 @@ public class MagnetSensor : MonoBehaviour
 
     void Awake()
     {
+        GameObject[] test = GameObject.FindGameObjectsWithTag("MagnetSensor");
+
+        if (test.Length > 1)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
         _sensorData = new List<Vector3>(WINDOW_SIZE);
         _offsets = new float[SEGMENT_SIZE];
     }
