@@ -45,10 +45,12 @@ public class MainMenuHelper : MonoBehaviour
         if (!gmgr) { Debug.Log("Couldn't find game manager"); }
 
         GAMESESSION.GAMEPLAY_TYPE = (GameMgr.GameplayType)gameModeID;
+        GAMESESSION.GAME_DIFF = (GameMgr.DiffModifier)gameDiff;
+        GAMESESSION.CONTROLLER_TYPE = (GameMgr.ControllerType)controllerType;
 
-       gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
-       gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
-       gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
+       gmgr.SetGameplayType(GAMESESSION.GAMEPLAY_TYPE);
+       gmgr.SetDiff(GAMESESSION.GAME_DIFF);
+       gmgr.SetControllerType(GAMESESSION.CONTROLLER_TYPE);
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
         GameObject.Destroy(this.gameObject);
     }

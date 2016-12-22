@@ -1,15 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GAMESESSION : MonoBehaviour {
+public static class GAMESESSION {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public static GameMgr.DiffModifier GAME_DIFF;
+    public static GameMgr.ControllerType CONTROLLER_TYPE;
+    public static GameMgr.GameplayType GAMEPLAY_TYPE;
 }

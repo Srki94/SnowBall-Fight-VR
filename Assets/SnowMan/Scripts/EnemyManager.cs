@@ -84,6 +84,7 @@ public class EnemyManager : MonoBehaviour
             || gmr.EnemiesToNextLevel <= 0)
         {
             Debug.Log(gmr.EnemiesToNextLevel + " spawner");
+            Debug.Log(GAMESESSION.GAMEPLAY_TYPE.ToString());
             return;
         }
         var f = Random.Range(0, enemySpawnPositions.Length);
