@@ -52,7 +52,8 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemy()
     { 
-        if (enemiesInScene.Count >= maxEnemiesInLevel)
+        if (enemiesInScene.Count >= maxEnemiesInLevel
+            || gmr.EnemiesToNextLevel <= 0)
         {
             return;
         }

@@ -105,6 +105,11 @@ public class GameMgr : MonoBehaviour
         gameOverGO.SetActive(true);
     }
 
+    public void InitLvlComplete()
+    {
+
+    }
+
     public void SetGameplayType(GameplayType type)
     {
         switch (type)

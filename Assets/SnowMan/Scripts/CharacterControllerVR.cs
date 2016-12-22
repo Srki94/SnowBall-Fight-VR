@@ -33,7 +33,7 @@ public class CharacterControllerVR : MonoBehaviour
     void Update()
     {
         if (isDead) {
-            Debug.Log("DIED");
+            gm.InitGameOver();
             return; }
         if (Input.GetMouseButtonDown(0) && gm.controllerType == GameMgr.ControllerType.Touch)
         {
