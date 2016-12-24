@@ -43,18 +43,18 @@ public class MainMenuHelper : MonoBehaviour
       //  SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
-    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        // GameMgr gmgr = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
-        // if (!gmgr) { Debug.Log("Couldn't find game manager"); }
-
-      
-        //gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
-        //gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
-        //gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
-        SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
-       //GameObject.Destroy(this.gameObject);
-    }
+   // private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+   // {
+   //     // GameMgr gmgr = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
+   //     // if (!gmgr) { Debug.Log("Couldn't find game manager"); }
+   //
+   //   
+   //     //gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
+   //     //gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
+   //     //gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
+   //     SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+   //    //GameObject.Destroy(this.gameObject);
+   // }
 
     private void OnDestroy()
     {

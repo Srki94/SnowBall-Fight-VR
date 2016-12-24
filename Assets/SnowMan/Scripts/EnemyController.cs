@@ -19,14 +19,18 @@ public class EnemyController : MonoBehaviour
     float shootRate = 1.5f;
     float sliceAmount = 0f;
     bool isDying = false;
+    bool isSpawning = false;
     Renderer thisRend;
     AudioSource sfxSource;
-    
+
     public AudioMixerGroup snowballSFXMixer;
     public AudioMixerGroup masterSFXMixer;
 
     void Start()
     {
+        isSpawning = true;
+        sliceAmount = 1f;
+
         thisAgent = GetComponent<NavMeshAgent>();
         thisRend = GetComponentInChildren<Renderer>();
         animator = GetComponent<Animator>();
@@ -38,6 +42,17 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        if (isSpawning)
+        {
+            sliceAmount = Mathf.Lerp(sliceAmount, 0f, 1f * Time.deltaTime);
+            thisRend.material.SetFloat("_SliceAmount", sliceAmount);
+            if (sliceAmount <= 0f)
+            {
+                isSpawning = false;
+                sliceAmount = 1f;
+            }
+        }
+
         if (isDying)
         {
             sliceAmount = Mathf.Lerp(sliceAmount, 1f, 1f * Time.deltaTime);
@@ -126,7 +141,6 @@ public class EnemyController : MonoBehaviour
             isDying = true;
             animator.Play("die");
 
-            
             GameObject.DestroyObject(gameObject, 2f);
             enemyMgr.NotifyEnemyDeath(gameObject);
         }

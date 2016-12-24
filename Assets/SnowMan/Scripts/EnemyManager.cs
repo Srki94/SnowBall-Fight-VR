@@ -17,6 +17,7 @@ public class EnemyManager : MonoBehaviour
     GameMgr gmr;
     bool isCountingDown;
     float initLvlCountdown = 5f;
+    private int currSpawnCnt;
 
     void Start()
     {
@@ -72,7 +73,7 @@ public class EnemyManager : MonoBehaviour
     {
         var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        for (var i =0; i<= enemies.Length-1; i++)
+        for (var i = 0; i <= enemies.Length - 1; i++)
         {
             enemies[i].GetComponent<EnemyController>().Die();
         }
@@ -80,7 +81,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        if (enemiesInScene.Count >= maxEnemiesInLevel
+        if (/*enemiesInScene.Count*/ currSpawnCnt >= maxEnemiesInLevel
             || gmr.EnemiesToNextLevel <= 0)
         {
             return;
@@ -91,13 +92,15 @@ public class EnemyManager : MonoBehaviour
                                                     enemySpawnPositions[f].position, enemySpawnPositions[f].rotation) as GameObject;
         dragon.GetComponent<EnemyController>().player = playerPos;
         dragon.GetComponent<EnemyController>().enemyMgr = this;
-        enemiesInScene.Add(dragon);
+        currSpawnCnt++;
+        //enemiesInScene.Add(dragon);
     }
 
     public void NotifyEnemyDeath(GameObject unit)
     {
         gmr.EnemiesToNextLevel--;
-       GAMESESSION.SCORE.sessionScore++;
+        currSpawnCnt--;
+        GAMESESSION.SCORE.sessionScore++;
     }
 
 }

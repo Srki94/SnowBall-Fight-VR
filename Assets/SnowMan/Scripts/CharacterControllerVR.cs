@@ -8,9 +8,10 @@ public class CharacterControllerVR : MonoBehaviour
     public GameObject snowBallPrefab;
     public float HP;
     public bool isDead = false;
-
+    
     GameMgr gm;
     AudioSource sfxSource;
+    float autoShootTimer = 0f;
 
     void Start()
     {
@@ -40,9 +41,40 @@ public class CharacterControllerVR : MonoBehaviour
        //    // }
        //     return;
        // }
-        if (Input.GetMouseButtonDown(0) && gm.controllerType == GameMgr.ControllerType.Touch)
+        if (Input.GetMouseButtonDown(0) && GAMESESSION.controllerType == GameMgr.ControllerType.Touch)
         {
             ThrowSnowball();
+        }
+        else if (GAMESESSION.controllerType == GameMgr.ControllerType.Auto)
+        { // if we're looking at the enemy cast ball every x seconds
+            autoShootTimer -= 1f * Time.deltaTime;
+            if (autoShootTimer <= 0f)
+            {
+                // RaycastHit hit;
+                // if (Physics.Raycast(transform.position, Camera.main.transform.forward, out hit))
+                // {
+                //    
+                //     Debug.Log(hit.transform);
+                //
+                //     Debug.DrawRay(transform.position, Camera.main.transform.forward, Color.red, 10f);
+                //     if (hit.transform.tag == "Enemy")
+                //     {
+                //         Debug.Log("Can see dragon");
+                //     }
+                // }
+
+                // RaycastHit[] hits = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward);
+                //
+                // foreach(var hit in hits)
+                // {
+                //     if (hit.transform.tag == "Enemy")
+                //     {
+                //         ThrowSnowball();
+                //     }
+                // }
+                ThrowSnowball();
+                autoShootTimer = 0.4f;
+            }
         }
     }
 

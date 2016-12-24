@@ -183,7 +183,10 @@ public class GameMgr : MonoBehaviour
 
     public void InitLvlComplete()
     {
-
+        HandleScore();
+        enemySpawner.DespawnAllEnemies();
+        announcerSnowmanGO.SetActive(true); // Hack : Make waves on the same map ... 
+        announcerSnowmanGO.GetComponent<SnowmanAnnouncerController>().SetActiveElement(SnowmanAnnouncerController.AnnouncerType.NewLevel);
     }
 
     public void SetGameplayType(GameplayType type, bool sceneReload = false)
