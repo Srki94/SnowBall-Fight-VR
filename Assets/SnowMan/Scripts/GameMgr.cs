@@ -59,7 +59,7 @@ public class GameMgr : MonoBehaviour
         if (!deviceVRController) { deviceVRController = GameObject.FindWithTag("GVRMain"); }
 
         //DontDestroyOnLoad(this);
-        SetGameplayType(GameplayType.Gyro);
+        //SetGameplayType(GameplayType.Gyro);
         InitNewGame();
 
     }
