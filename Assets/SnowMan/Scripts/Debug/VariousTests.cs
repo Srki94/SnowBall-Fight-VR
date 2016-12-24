@@ -4,12 +4,13 @@ using System.Collections;
 public class VariousTests : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-        GAMESESSION.SCORE.LoadScores();
+	void Awake () {
+        //   GAMESESSION.SCORE.LoadScores();
+        
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
-	}
+	void Start () {
+        var f = gameObject.GetComponent<GvrAudioSource>();
+    }
 }
