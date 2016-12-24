@@ -60,8 +60,10 @@ public class GameMgr : MonoBehaviour
 
         //DontDestroyOnLoad(this);
         //SetGameplayType(GameplayType.Gyro);
+        SetControllerType(GAMESESSION.controllerType);
+        SetDiff(GAMESESSION.difficulty);
+        SetGameplayType(GAMESESSION.gameplayType);
         InitNewGame();
-
     }
 
     void Update()
@@ -186,6 +188,8 @@ public class GameMgr : MonoBehaviour
 
     public void SetGameplayType(GameplayType type, bool sceneReload = false)
     {
+        GAMESESSION.gameplayType = type;
+
         if (sceneReload)
         {
             deviceVRController = GameObject.FindGameObjectWithTag("GVRMain");
@@ -206,11 +210,13 @@ public class GameMgr : MonoBehaviour
 
     public void SetDiff(DiffModifier diff)
     {
+        GAMESESSION.difficulty = diff;
         difficulty = diff;
     }
 
     public void SetControllerType(ControllerType type)
     {
+        GAMESESSION.controllerType = type;
         controllerType = type;
     }
     void UpdateEnemyCnt()

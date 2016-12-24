@@ -34,21 +34,26 @@ public class MainMenuHelper : MonoBehaviour
     }
 
     public void StartNewGame()
-    { 
+    {
+        GAMESESSION.controllerType = (GameMgr.ControllerType)controllerType;
+        GAMESESSION.difficulty = (GameMgr.DiffModifier)gameDiff;
+        GAMESESSION.gameplayType = (GameMgr.GameplayType)gameModeID;
+
         SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
-        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+      //  SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        GameMgr gmgr = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
-        if (!gmgr) { Debug.Log("Couldn't find game manager"); }
+        // GameMgr gmgr = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
+        // if (!gmgr) { Debug.Log("Couldn't find game manager"); }
 
-        gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
-        gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
-        gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
+      
+        //gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
+        //gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
+        //gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
-        GameObject.Destroy(this.gameObject);
+       //GameObject.Destroy(this.gameObject);
     }
 
     private void OnDestroy()

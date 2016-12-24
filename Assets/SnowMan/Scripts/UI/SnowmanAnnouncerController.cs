@@ -69,7 +69,6 @@ public class SnowmanAnnouncerController : MonoBehaviour
     public void UpdateDiffText()
     {
         diffTxt.text = GameMgr.difficulty.ToString();
-
     }
 
    
