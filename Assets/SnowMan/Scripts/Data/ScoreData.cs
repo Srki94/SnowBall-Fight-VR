@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-
-namespace SnowMan.Data
+namespace snowman
 {
     public class ScoreData
     {

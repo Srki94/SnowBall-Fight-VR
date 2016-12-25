@@ -2,22 +2,24 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
-public class CallUIEventOnCollision : MonoBehaviour
+namespace snowman
 {
-    GameObject targetGO;
-
-    void Start()
+    public class CallUIEventOnCollision : MonoBehaviour
     {
-        targetGO = gameObject;
-    }
+        GameObject targetGO;
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag != "PlayerAmmo") { return; }
+        void Start()
+        {
+            targetGO = gameObject;
+        }
 
-        var pointer = new PointerEventData(EventSystem.current);
-        ExecuteEvents.Execute(targetGO, pointer, ExecuteEvents.pointerClickHandler);
-        Debug.Log("UI Hit");
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag != "PlayerAmmo") { return; }
+
+            var pointer = new PointerEventData(EventSystem.current);
+            ExecuteEvents.Execute(targetGO, pointer, ExecuteEvents.pointerClickHandler);
+            Debug.Log("UI Hit");
+        }
     }
 }

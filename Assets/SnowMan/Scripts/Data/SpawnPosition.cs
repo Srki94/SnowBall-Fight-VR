@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.SnowMan.Scripts.Data
+namespace snowman
 {
     [Serializable()]
- public   class SpawnPosition
+    public class SpawnPosition
     {
         public string ID;
         public Transform locationPosition;
@@ -18,6 +18,6 @@ namespace Assets.SnowMan.Scripts.Data
             return taken;
         }
 
-         
+
     }
 }

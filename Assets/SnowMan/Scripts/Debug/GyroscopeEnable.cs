@@ -2,20 +2,21 @@
 
 using UnityEngine;
 using System.Collections;
-
-public class GyroscopeEnable : MonoBehaviour
+namespace snowman
 {
-    private Gyroscope gyro;
-
-    void Start()
+    public class GyroscopeEnable : MonoBehaviour
     {
-        if (SystemInfo.supportsGyroscope)
+        private Gyroscope gyro;
+
+        void Start()
         {
-            gyro = Input.gyro;
-            gyro.enabled = true;
+            if (SystemInfo.supportsGyroscope)
+            {
+                gyro = Input.gyro;
+                gyro.enabled = true;
+            }
+            DontDestroyOnLoad(this);
         }
-        DontDestroyOnLoad(this);
     }
 }
-
 #endif

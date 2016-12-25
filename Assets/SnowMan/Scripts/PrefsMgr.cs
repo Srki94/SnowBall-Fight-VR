@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using SnowMan.Data;
-
+ 
+namespace snowman { 
 public class PrefsMgr : MonoBehaviour
 {
 
@@ -21,4 +21,5 @@ public class PrefsMgr : MonoBehaviour
    //{
    //    playerScoreData.ResetCounters();
    //}
+}
 }
