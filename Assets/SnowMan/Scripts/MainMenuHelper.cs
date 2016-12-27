@@ -16,6 +16,7 @@ namespace snowman
 
         private void Start()
         {
+            UnityEngine.VR.VRSettings.enabled = false;
             DontDestroyOnLoad(this);
         }
 
@@ -40,22 +41,31 @@ namespace snowman
             GAMESESSION.difficulty = (GameMgr.DiffModifier)gameDiff;
             GAMESESSION.gameplayType = (GameMgr.GameplayType)gameModeID;
 
-            SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
-            //  SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+
+            SceneManager.sceneLoaded += SceneManager_sceneLoaded;
         }
 
-        // private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
-        // {
-        //     // GameMgr gmgr = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
-        //     // if (!gmgr) { Debug.Log("Couldn't find game manager"); }
-        //
-        //   
-        //     //gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
-        //     //gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
-        //     //gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
-        //     SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
-        //    //GameObject.Destroy(this.gameObject);
-        // }
+        private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
+            if (GAMESESSION.gameplayType == GameMgr.GameplayType.VR)
+            {
+                UnityEngine.VR.VRSettings.enabled = true;
+            }
+            else
+            {
+                UnityEngine.VR.VRSettings.enabled = false;
+            }
+            // GameMgr gmgr = GameObject.FindWithTag("GameController").GetComponent<GameMgr>();
+            // if (!gmgr) { Debug.Log("Couldn't find game manager"); }
+
+
+            //gmgr.SetGameplayType((GameMgr.GameplayType)gameModeID);
+            //gmgr.SetDiff((GameMgr.DiffModifier)gameDiff);
+            //gmgr.SetControllerType((GameMgr.ControllerType)controllerType);
+            //  SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+            //GameObject.Destroy(this.gameObject);
+        }
 
         private void OnDestroy()
         {
